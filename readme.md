@@ -1,13 +1,13 @@
 # VHDL implementation of an FIR filter
 
 The aim of this project is to design a digital circuit that creates a low pass finite impulsive response (FIR) filter of order N (N = 6).
-The normalized cut-off frequency ![](https://latex.codecogs.com/gif.latex?f_T%20%3D%200.2%20%5Ccdot%20f_c).  with f_c is the sampling frequency.
+The normalized cut-off frequency ![](https://latex.codecogs.com/gif.latex?f_T%20%3D%200.2%20%5Ccdot%20f_c).  with (https://latex.codecogs.com/gif.latex?%5Cinline%20f_c) is the sampling frequency.
 The filter expression is given by
 ![equation1](https://latex.codecogs.com/gif.latex?%5Cinline%20y%5Bn%5D%20%3D%20%5Csum_%7Bi%3D0%7D%5E%7BN%7D%20b_i%20%5Ccdot%20x%5Bn-i%5D)
 
 
 For implementation purpose, inputs, outputs and coefficients use a 16 bits representation. 
-For the coefficients, the following values ​​can be used b_0 = 0.0135; b_1 = 0.0785; b_2 = 0.2409; b_3 = 0.3344; b_4 = 0.2409; b_5 = 0.0785; b_6 = 0.0135; 
+For the coefficients, the following values can be used (https://latex.codecogs.com/gif.latex?%5Cinline%20%7B%20b_0%20%3D%200.0135%3B%20b_1%20%3D%200.0785%3B%20b_2%20%3D%200.2409%3B%20b_3%20%3D%200.3344%3B%20b_4%20%3D%200.2409%3B%20b_5%20%3D%200.0785%3B%20b_6%20%3D%200.0135%3B%20%7D)
 
 The final project report contains: 
 * General introduction 
@@ -27,8 +27,8 @@ For a causal discrete-time FIR filter of order N, each value of the output seque
 
 ![equation1](https://latex.codecogs.com/gif.latex?%5Cinline%20y%5Bn%5D%20%3D%20%5Csum_%7Bi%3D0%7D%5E%7BN%7D%20b_i%20%5Ccdot%20x%5Bn-i%5D)
 
-where x[n] is the input signal, y[n] is the output signal, N is the filter order; an Nth-order filter has N+1 terms on the right-hand side and b_i  is the value of the impulse response at the i'th instant of an Nth-order FIR filter. 
-If the filter is a direct form FIR filter then  b_i  is also a coefficient of the filter.
+where x[n] is the input signal, y[n] is the output signal, N is the filter order; an Nth-order filter has N+1 terms on the right-hand side and (https://latex.codecogs.com/gif.latex?%5Cinline%20b_i)  is the value of the impulse response at the i'th instant of an Nth-order FIR filter. 
+If the filter is a direct form FIR filter then  (https://latex.codecogs.com/gif.latex?%5Cinline%20b_i)  is also a coefficient of the filter.
 This computation is also known as discrete convolution.
 
 :bulb: Proprieties
@@ -105,11 +105,11 @@ We need to specify the data type of the block's output, Unsigned integer or Sign
 ~~~~
 
 The quantized floating-point value is uniquely mapped (encoded) to one of 2^B integer values.
-When the Output type is set to Unsigned integer, the smallest quantized floating-point value, -V, is mapped to the integer 0, and the largest quantized floating-point value, (1-2^(1-B))V, is mapped to the integer 2^B-1.
-Intermediate quantized floating-point values are linearly (uniformly) mapped to the intermediate integers in the range [0, 2^(B-1)]. 
+When the Output type is set to Unsigned integer, the smallest quantized floating-point value, -V, is mapped to the integer 0, and the largest quantized floating-point value, (https://latex.codecogs.com/gif.latex?%5Cinline%20%281-2%5E%7B%281-B%29%7D%29V), is mapped to the integer (https://latex.codecogs.com/gif.latex?%5Cinline%202%5EB-1).
+Intermediate quantized floating-point values are linearly (uniformly) mapped to the intermediate integers in the range (https://latex.codecogs.com/gif.latex?%5Cinline%20%5B0%2C%202%5E%7B%28B-1%29%7D%5D). 
 
 Through numerical calculations via Matlab, the coefficients are converted to integer representation and have the values: 
-b_0 = 442; b_1 = 2572; b_2 = 7894; b_3 = 10958; b_4 = 7894; b_5 = 2572; b_6 =442.
+(https://latex.codecogs.com/gif.latex?%5Cinline%20%7Bb_0%20%3D%20442%3B%20b_1%20%3D%202572%3B%20b_2%20%3D%207894%3B%20b_3%20%3D%2010958%3B%20b_4%20%3D%207894%3B%20b_5%20%3D%202572%3B%20b_6%20%3D442%7D).
 
 Note that the output size of the filter process is of 32 bits.
 
@@ -167,27 +167,26 @@ Figure bellow shows the RTL view of the FIR filter.
  ![](Figures/schematic.jpg)
 
 2. Synthesis
-2.1- Timing report
-For a clock period set to 10 ns, we derive an appropriate timing report. 
+	
+	2.1- Timing report
+		For a clock period set to 10 ns, we derive an appropriate timing report. 
 
-2.2- Maximum operating frequency
-A non zero value of positive worst negative slack is show in the timing report. This implies a circuit not operating at the maximum frequency possible
+	2.2- Maximum operating frequency
+		A non zero value of positive worst negative slack is show in the timing report. This implies a circuit not operating at the maximum frequency possible
+		(https://latex.codecogs.com/gif.latex?%5Cinline%20%7Bf_%7Bmax%7D%20%3D%20%5Cfrac%7B1%7D%7Bt_%7Bclk%7D-slack%7D%20%3D%20%5Cfrac%7B1%7D%7B10ns-6.18ns%7D%20%3D%20%5Cfrac%7B1%7D%7B3.82ns%7D%20%3D%20260MHz%7D)
+		Thus, the maximum frequency at which the clock can be guided is 260 MHz.
 
-Thus, the maximum frequency at which the clock can be guided is 260 MHz.
 
+	2.3- Power report
+		The on-chip power are basically from the I/O peripherials (82%) and in a second part from the DSP used for multiplications and additions (12%).
+		![](Figures/power.jpg)
 
-2.3- Power report
-The on-chip power are basically from the I/O peripherials (82%) and in a second part from the DSP used for multiplications and additions (12%).
+	2.4- Utilization report
+		The used resource us the I/O as the circuit has 16 bits input and a 32 bits output.
+ 		![](Figures/utilization.jpg)
+ 		![](Figures/utilizationGraph.jpg)
  
-![](Figures/power.jpg)
-
-2.4- Utilization report
-The used resource us the I/O as the circuit has 16 bits input and a 32 bits output.
-
- ![](Figures/utilization.jpg)
- ![](Figures/utilizationGraph.jpg)
- 
-Conclusions
+## Conclusions
 
 The proposed project meets the filtering process requirements.
 Further improvements can be made by:
