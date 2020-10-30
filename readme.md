@@ -158,8 +158,8 @@ The resulted filtering ouput converges in a sine wave, which perfectly correspon
 The hardware implementation of the design was carried out using Vivado software by Xilinx. The targed will be the Zynq-7000 borad.
 The typical flow of hardware implementation implies 
 
-1. RTL analysis
-2. Synthesis and finally the implementation
+- [x] RTL analysis
+- [x] Synthesis and finally the implementation
 
 1. RTL view
 
@@ -190,8 +190,8 @@ Figure bellow shows the RTL view of the FIR filter.
 
 The proposed project meets the filtering process requirements.
 Further improvements can be made by:
-	1- Reducing the number of multiplications for symmetricfilter.
-	2- Improving filter precision by exploitung the floating point numbers or increasing the number of steps.
+	1.Reducing the number of multiplications for symmetricfilter.
+	2.Improving filter precision by exploitung the floating point numbers or increasing the number of steps.
 
 
 
